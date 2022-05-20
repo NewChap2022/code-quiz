@@ -1,0 +1,34 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+:root {
+    --primary: #cdb4db;
+    --secondary: #ffafcc;
+    --tertiary: #bde0fe;
+    --white: #ffffff;
+}
+
+
+#highscore-container {
+    background-color: var(--white);
+}
+
+#highscore-container h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#highscore-table {
+    margin-left:auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+#highscore-table, th, td {
+    border: 2px solid black;
+    font-size: 18px;
+    padding: 10px;
+}
