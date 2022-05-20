@@ -1,11 +1,18 @@
 var startBtn = document.querySelector("#start-btn");
 var intro = document.querySelector("#intro");
 var main = document.querySelector("main");
+var questionIndexCount = 0;
 var quizContent = [
     {
         question: "lorem jeleljt dielf fjlejti fjoelet jfieo jeoe fiejfj fjiefj fjielfj fjieljf eilmc jioejf jioejf fjei",
         options: ["jieoegoep", "jioetpmf", "jeiwpjpw", "jeipemtg"],
         answer: 0
+    },
+
+    {
+        question: "jfiepetjn jflseji  fggkgk ffkfklr fkkf fjfr fkfle fkkflle fkelf",
+        options: ["jfjfj", "jfjj", "jjj", "mcmcm"],
+        answer: 2
     },
 ];
 
@@ -17,7 +24,7 @@ var quizCreate = function () {
     var questionContainer = document.createElement("div");
     questionContainer.className = "question-container";
     questionContainer.id = "question";
-    questionContainer.innerHTML = quizContent[0].question;
+    questionContainer.innerHTML = quizContent[questionIndexCount].question;
     quiz.appendChild(questionContainer);
 
     var optionContainer = document.createElement("div");
@@ -28,9 +35,9 @@ var quizCreate = function () {
         var btn = document.createElement("button");
         btn.setAttribute("type", "button");
         btn.className = "option";
-        btn.id = "opt-" + i+1 + "";
+        btn.id = "opt-" + (i+1) + "";
         optionContainer.appendChild(btn);
-        btn.innerText = quizContent[0].options[i];
+        btn.innerText = quizContent[questionIndexCount].options[i];
     }
 
     var resultContainer = document.createElement("div");
@@ -41,5 +48,37 @@ var quizCreate = function () {
 
 startBtn.onclick = function () {
     intro.style.display = "none";
-    quizCreate()
+    quizCreate();
 };
+
+var answerQuiz = function (event) {
+    var selectAnswer = event.target;
+    if (selectAnswer.matches(".option")) {    
+        var indexAnswer = quizContent[questionIndexCount].answer;
+        var answerContent = quizContent[questionIndexCount].options[indexAnswer];
+        var chosenOption = selectAnswer.innerHTML;
+        var result = document.querySelector("#result");
+        if (chosenOption === answerContent) {
+            result.innerHTML = "Correct Answer";
+        } else {
+            result.innerHTML = "Wrong Answer";
+        };
+
+        setTimeout(makeQuestion, 3000);
+    }
+};
+
+var makeQuestion = function () {
+    console.log("Next Question is Coming!");
+    var result = document.querySelector("#result");
+    result.innerHTML = "Do you know the answer?"
+    questionIndexCount++;
+    var questionContainer = document.querySelector("#question");
+    questionContainer.innerHTML = quizContent[questionIndexCount].question;
+    for (var i = 0; i < 4; i++) {
+        var btn = document.querySelector("#opt-" + (i+1) + "");
+        btn.innerText = quizContent[questionIndexCount].options[i];
+    };
+}
+
+main.addEventListener("click", answerQuiz);
