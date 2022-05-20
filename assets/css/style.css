@@ -34,12 +34,17 @@ nav ul {
     justify-content: space-between;
 }
 
-.nav-content {
+.link {
     list-style-type: none;
     margin: 5px, 2vw;
     padding: 1vw;
-
+    width: 250px;
+    text-align: center;
+    border: 2px dotted var(--white);
+    border-radius: 10px;
 }
+ 
+
 
 .link:hover {
     background-color: var(--tertiary);
@@ -51,6 +56,18 @@ nav ul {
     color: var(--white);
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     font-size: 20px;
+    margin: 0px; 
+    display: block; 
+    width: 100%; 
+    height: 100%; 
+}
+
+#countdown {
+    list-style-type: none;
+    width: 250px;
+    font-size: 40px;
+    text-align: center;
+    display:none;
 }
 
 #intro {

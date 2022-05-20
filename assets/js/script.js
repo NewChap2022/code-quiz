@@ -2,7 +2,8 @@ var startBtn = document.querySelector("#start-btn");
 var intro = document.querySelector("#intro");
 var main = document.querySelector("main");
 var questionIndexCount = 0;
-var savedScore = JSON.parse(localStorage.getItem("savedScore"));
+var savedScore = localStorage.getItem("savedScore");
+var time = 60;
 
 var quizContent = [
     {
@@ -48,11 +49,6 @@ var quizCreate = function () {
     quiz.appendChild(resultContainer);
 }
 
-startBtn.onclick = function () {
-    intro.style.display = "none";
-    quizCreate();
-};
-
 var answerQuiz = function (event) {
     var selectAnswer = event.target;
     if (selectAnswer.matches(".option")) {
@@ -64,6 +60,7 @@ var answerQuiz = function (event) {
             result.innerHTML = "Correct Answer";
         } else {
             result.innerHTML = "Wrong Answer";
+            time = time - 10;
         };
 
         setTimeout(makeQuestion, 2000);
@@ -72,6 +69,7 @@ var answerQuiz = function (event) {
 
 var makeQuestion = function () {
     console.log("Next Question is Coming!");
+    document.activeElement.blur();
     var result = document.querySelector("#result");
     result.innerHTML = "Do you know the answer?"
     questionIndexCount++;
@@ -85,21 +83,47 @@ var makeQuestion = function () {
     } else {
         var quiz = document.querySelector("#quiz");
         quiz.style.display = "none";
-        alert("Congratulations! You have answered all the questions and let's check out how you do. Your score is ")
-        saveScore();
+        alert("Congratulations! You have answered all the questions and let's check out how you do. Your score is " + time)
+        saveScore(time);
     }
 }
 
-  var saveScore = function () {
-            var name = prompt("What's your name?");
-            var score = "40";
-            var playerScore = {name: name, score: score};
-            if (!savedScore) {
-                savedScore = [];
-            };
-            savedScore.push(playerScore);
-            localStorage.setItem("savedScore", JSON.stringify(savedScore));
-            window.open("highscore.html", "_self")
-        }
+var saveScore = function (score) {
+    var name = prompt("What's your name?");
+    var playerScore = { name: name, score: score };
+    if (!savedScore) {
+        savedScore = [];
+    } else {
+        savedScore = JSON.parse(savedScore)
+    };
+    savedScore.push(playerScore);
+    localStorage.setItem("savedScore", JSON.stringify(savedScore));
+    window.open("highscore.html", "_self")
+}
+
+var countDown = function () {
+    var countDownTimer = document.querySelector("#countdown");
+    countDownTimer.style.display = "block";
+    var timeLeft = setInterval(function () {
+        if (time <= 0) {
+            clearInterval(timeLeft);
+            countDownTimer.innerText = "Time's Up!"
+            var quiz = document.querySelector("#quiz");
+            quiz.style.display = "none";
+            alert ("Sorry, time's up!  Your score is" + time);
+            window.open("highscore.html", "_self");
+        } else {
+            countDownTimer.innerText = "Time Left: " + time;
+        };
+        time --;
+    }, 1000)
+}
+
+startBtn.onclick = function () {
+    intro.style.display = "none";
+    quizCreate();
+    time = 200;
+    countDown();
+};
 
 main.addEventListener("click", answerQuiz);
