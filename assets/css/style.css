@@ -11,7 +11,8 @@
     --white: #ffffff;
 }
 
-header, footer{
+header,
+footer {
     background-color: var(--primary);
     text-align: center;
     font-weight: bold;
@@ -35,9 +36,14 @@ nav ul {
 
 .nav-content {
     list-style-type: none;
-    margin: 2vw;
+    margin: 5px, 2vw;
     padding: 1vw;
-    
+
+}
+
+.link:hover {
+    background-color: var(--tertiary);
+    border-radius: 15px;
 }
 
 .nav-content a {
@@ -47,13 +53,61 @@ nav ul {
     font-size: 20px;
 }
 
+#intro {
+    background-color: var(--white);
+    text-align: center;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#intro h2 {
+    font-size: 22px;
+    padding-top: 20px;
+    margin-bottom: 30px;
+}
+
+#intro p {
+    font-size: 18px;
+    margin: 15px 10px;
+    width: 50%;
+}
+
+#intro button {
+    background-color: var(--tertiary);
+    font-size: 20px;
+    width: 100px;
+    margin: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+#intro button:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+footer {
+    padding: 30px;
+    font-style: italic;
+}
+
 #quiz {
     background-color: var(--white);
+    height: auto;
 }
 
 .question-container {
     text-align: center;
     font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
 }
 
 .option-container {
@@ -63,20 +117,22 @@ nav ul {
 }
 
 .option {
-    background-color: var(--primary);
+    background-color: var(--tertiary);
     margin: 1px;
     padding: 15px;
     font-size: 15px;
 }
 
 .option:hover {
-    background-color: var(--tertiary);
+    background-color: var(--secondary);
 }
 
 #result {
     font-style: italic;
     font-weight: bold;
     font-size: 20px;
+    text-align: center;
+    padding: 10px;
 }
 
 @media screen and (max-width: 570px) {
