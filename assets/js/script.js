@@ -5,6 +5,7 @@ var questionIndexCount = 0;
 var savedScore = localStorage.getItem("savedScore");
 var time = 200;
 
+// all the questions in the quiz
 var quizContent = [
     {
         question: "What is one advantage of Responsive Design for a developer?",
@@ -20,7 +21,7 @@ var quizContent = [
 
     {
         question: "How would you create a box with rounded corners using CSS?",
-        options: ["box-corner: round","corner-style: round","border-radius: 50px", "transform: round(corner)"],
+        options: ["box-corner: round", "corner-style: round", "border-radius: 50px", "transform: round(corner)"],
         answer: 2
     },
 
@@ -49,12 +50,6 @@ var quizContent = [
     },
 
     {
-        question: "Which attribute selector would you use if you wanted to target all <a> elements that have an href value that ends with '.png' to change the color? What would this look like in style.css?",
-        options: ["a.href { color: green }", ".href$'.png' { color: green }", "a[href$='.png']{ color: green }", "a[href.png] { color: green }"],
-        answer: 2
-    },
-
-    {
         question: "How do you declare a custom property or 'CSS variable'?",
         options: ["var root-my-color = green;", ":root { var my-color = green; }", "var my-color = green;", ":root { --my-color: green; }"],
         answer: 3
@@ -62,11 +57,18 @@ var quizContent = [
 
     {
         question: "How would I check which files are staged, unstaged, and untracked using git commands?",
-        options: ["git commit -m", "git status","git fetch", "git add ."],
+        options: ["git commit -m", "git status", "git fetch", "git add ."],
+        answer: 1
+    },
+
+    {
+        question: "Inside which HTML element do we put the JavaScript?",
+        options: ["<js>", "<script>", "<javascript>", "<link>"],
         answer: 1
     }
 ];
 
+// create html element to display quiz
 var quizCreate = function () {
     var quiz = document.createElement("div");
     quiz.id = "quiz";
@@ -82,6 +84,7 @@ var quizCreate = function () {
     optionContainer.className = "option-container";
     quiz.appendChild(optionContainer);
 
+    // using for loops to add text content to buttons
     for (var i = 0; i < 4; i++) {
         var btn = document.createElement("button");
         btn.setAttribute("type", "button");
@@ -97,29 +100,39 @@ var quizCreate = function () {
     quiz.appendChild(resultContainer);
 }
 
+// give feedback after choosing answers
 var answerQuiz = function (event) {
     var selectAnswer = event.target;
+
     if (selectAnswer.matches(".option")) {
         var indexAnswer = quizContent[questionIndexCount].answer;
         var answerContent = quizContent[questionIndexCount].options[indexAnswer];
-        var chosenOption = selectAnswer.innerHTML;
+        var chosenOption = selectAnswer.innerText;
         var result = document.querySelector("#result");
+
         if (chosenOption === answerContent) {
             result.innerHTML = "Correct Answer";
+            result.style.color = "green"
         } else {
             result.innerHTML = "Wrong Answer";
-            time = time - 10;
+            result.style.color = "red"
+            time = time - 20;
+            if (time < 0) {
+                time = 0;
+            }
         };
-
-        setTimeout(makeQuestion, 2000);
+        // offer time to see the feedback before automatically jump to next question
+        setTimeout(makeQuestion, 1500);
     }
 };
 
+// refresh new question
 var makeQuestion = function () {
     console.log("Next Question is Coming!");
     document.activeElement.blur();
     var result = document.querySelector("#result");
-    result.innerHTML = "Do you know the answer?"
+    result.innerHTML = "Do you know the answer?";
+    result.style.color = "black";
     questionIndexCount++;
     if (questionIndexCount <= quizContent.length - 1) {
         var questionContainer = document.querySelector("#question");
@@ -136,6 +149,7 @@ var makeQuestion = function () {
     }
 }
 
+// save the score into local storage
 var saveScore = function (score) {
     var name = prompt("What's your name?");
     var playerScore = { name: name, score: score };
@@ -149,6 +163,7 @@ var saveScore = function (score) {
     window.open("highscore.html", "_self")
 }
 
+// countdown time
 var countDown = function () {
     var countDownTimer = document.querySelector("#countdown");
     countDownTimer.style.display = "block";
@@ -158,15 +173,16 @@ var countDown = function () {
             countDownTimer.innerText = "Time's Up!"
             var quiz = document.querySelector("#quiz");
             quiz.style.display = "none";
-            alert ("Sorry, time's up!  Your score is" + time);
+            alert("Sorry, time's up!  Your score is " + time);
             window.open("highscore.html", "_self");
         } else {
             countDownTimer.innerText = "Time Left: " + time;
         };
-        time --;
+        time--;
     }, 1000)
 }
 
+// after click start button, run all these functions
 startBtn.onclick = function () {
     intro.style.display = "none";
     quizCreate();

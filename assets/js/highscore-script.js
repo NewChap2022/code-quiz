@@ -1,3 +1,5 @@
+var clearBtn = document.querySelector("#reset");
+
 var loadScore = function() {
     var savedScore = localStorage.getItem("savedScore");
     if (!savedScore) {
@@ -15,3 +17,9 @@ var loadScore = function() {
 }
 
 loadScore();
+
+clearBtn.onclick = function () {
+    localStorage.removeItem("savedScore");
+    location.reload();
+};
+
