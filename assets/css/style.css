@@ -24,10 +24,6 @@ header h1 {
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5)
 }
 
-main {
-    background-color: var(--secondary);
-}
-
 nav ul {
     display: flex;
     flex-wrap: wrap;
@@ -36,18 +32,18 @@ nav ul {
 
 .link {
     list-style-type: none;
-    margin: 5px, 2vw;
+    margin: 5px 2vw;
     padding: 1vw;
     width: 250px;
     text-align: center;
-    border: 2px dotted var(--white);
     border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
  
 
 
 .link:hover {
-    background-color: var(--tertiary);
+    background-color: var(--secondary);
     border-radius: 15px;
 }
 

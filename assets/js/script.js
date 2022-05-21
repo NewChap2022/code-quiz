@@ -3,20 +3,68 @@ var intro = document.querySelector("#intro");
 var main = document.querySelector("main");
 var questionIndexCount = 0;
 var savedScore = localStorage.getItem("savedScore");
-var time = 60;
+var time = 200;
 
 var quizContent = [
     {
-        question: "lorem jeleljt dielf fjlejti fjoelet jfieo jeoe fiejfj fjiefj fjielfj fjieljf eilmc jioejf jioejf fjei",
-        options: ["jieoegoep", "jioetpmf", "jeiwpjpw", "jeipemtg"],
+        question: "What is one advantage of Responsive Design for a developer?",
+        options: ["Faster page loading time", "Faster development", "More social sharing", "Improved SEO"],
+        answer: 1
+    },
+
+    {
+        question: "When using flexbox, which property needs to be adjusted in order to add space between items?",
+        options: ["justify-content", "flex-flow", "align-content", "space-between"],
         answer: 0
     },
 
     {
-        question: "jfiepetjn jflseji  fggkgk ffkfklr fkkf fjfr fkfle fkkflle fkelf",
-        options: ["jfjfj", "jfjj", "jjj", "mcmcm"],
+        question: "How would you create a box with rounded corners using CSS?",
+        options: ["box-corner: round","corner-style: round","border-radius: 50px", "transform: round(corner)"],
         answer: 2
     },
+
+    {
+        question: "What is a CSS reset?",
+        options: ["Deleting the contenst of a stylesheet to implement entirely new design", "A stylesheet that clears the default formatting of the browser", "A CSS property that resets the values of child elements", "A media query that resets the responsive design when switching devices"],
+        answer: 1
+    },
+
+    {
+        question: "A client wants to make sure that the browser has multiple fonts to choose from, just in case the default font isn't supported. How would you make sure that the default font is set to 'Arial', but that there are also two other fonts available to the browser?",
+        options: ["Add a stylesheet for each additional font", "Assign 'Arial' to the default-font property and use the alternative-font property for the backups", "None of the above. The default font of all browsers is 'Arial' and you can only specify one alternative.", "Assign multiple fonts to the font-family property"],
+        answer: 3
+    },
+
+    {
+        question: " Which user-action pseudo-class would you need to add in order to change an element when the mouse is over it?",
+        options: [":visited", ":activate", ":checked", ":hover"],
+        answer: 3
+    },
+
+    {
+        question: "What is wireframing?",
+        options: ["A blueprint of our website's page layout.", "A 3D model of our websites structure made from wires.", "A CSS library that helps in the creation of borders around our boxed elements.", "Wireframing helps us quickly set up our HTML page."],
+        answer: 0
+    },
+
+    {
+        question: "Which attribute selector would you use if you wanted to target all <a> elements that have an href value that ends with '.png' to change the color? What would this look like in style.css?",
+        options: ["a.href { color: green }", ".href$'.png' { color: green }", "a[href$='.png']{ color: green }", "a[href.png] { color: green }"],
+        answer: 2
+    },
+
+    {
+        question: "How do you declare a custom property or 'CSS variable'?",
+        options: ["var root-my-color = green;", ":root { var my-color = green; }", "var my-color = green;", ":root { --my-color: green; }"],
+        answer: 3
+    },
+
+    {
+        question: "How would I check which files are staged, unstaged, and untracked using git commands?",
+        options: ["git commit -m", "git status","git fetch", "git add ."],
+        answer: 1
+    }
 ];
 
 var quizCreate = function () {
