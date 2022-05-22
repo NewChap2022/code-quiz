@@ -66,7 +66,7 @@ nav ul {
     display:none;
 }
 
-#intro {
+#intro, #end {
     background-color: var(--white);
     text-align: center;
     height: 50vh;
@@ -82,10 +82,26 @@ nav ul {
     margin-bottom: 30px;
 }
 
+#end h2 {
+    font-size: 50px;
+    color: purple;
+}
+
 #intro p {
     font-size: 18px;
     margin: 15px 10px;
     width: 50%;
+}
+
+#end p, #end input, #end button {
+    font-size: 30px;
+    margin: 10px;
+}
+
+#end p span {
+    color: red;
+    font-weight: bold;
+    font-style: italic;
 }
 
 #intro button {

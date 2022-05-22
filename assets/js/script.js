@@ -1,6 +1,7 @@
 var startBtn = document.querySelector("#start-btn");
 var intro = document.querySelector("#intro");
 var main = document.querySelector("main");
+var countDownTimer = document.querySelector("#countdown");
 var questionIndexCount = 0;
 var savedScore = localStorage.getItem("savedScore");
 var time = 200;
@@ -117,9 +118,6 @@ var answerQuiz = function (event) {
             result.innerHTML = "Wrong Answer";
             result.style.color = "red"
             time = time - 20;
-            if (time < 0) {
-                time = 0;
-            }
         };
         // offer time to see the feedback before automatically jump to next question
         setTimeout(makeQuestion, 1500);
@@ -142,39 +140,59 @@ var makeQuestion = function () {
             btn.innerText = quizContent[questionIndexCount].options[i];
         };
     } else {
-        var quiz = document.querySelector("#quiz");
-        quiz.style.display = "none";
-        alert("Congratulations! You have answered all the questions and let's check out how you do. Your score is " + time)
-        saveScore(time);
+        if (time > 0) {
+            var quiz = document.querySelector("#quiz");
+            quiz.style.display = "none";
+            countDownTimer.style.display = "none";
+            var end = document.createElement("div");
+            end.id = "end";
+            main.appendChild(end);
+            end.innerHTML = "<h2>Congratulations!</h2><p>You have answered all the questions and let's check out how you do.</p><p>Your score: <span>" + time + "</span></p>";
+            saveScore(time, end);
+        }
     }
 }
 
 // save the score into local storage
-var saveScore = function (score) {
-    var name = prompt("What's your name?");
-    var playerScore = { name: name, score: score };
-    if (!savedScore) {
-        savedScore = [];
-    } else {
-        savedScore = JSON.parse(savedScore)
-    };
-    savedScore.push(playerScore);
-    localStorage.setItem("savedScore", JSON.stringify(savedScore));
-    window.open("highscore.html", "_self")
+var saveScore = function (score, container) {
+    var nameInput = document.createElement("input");
+    nameInput.setAttribute("type", "text");
+    nameInput.setAttribute("placeholder", "Your Initial Please");
+    container.appendChild(nameInput);
+    var submitBtn = document.createElement("button");
+    submitBtn.innerText = "Submit";
+    container.appendChild(submitBtn);
+    submitBtn.onclick = function () {
+        var playerName = nameInput.value;
+        var playerScore = { name: playerName, score: score };
+        if (!savedScore) {
+            savedScore = [];
+        } else {
+            savedScore = JSON.parse(savedScore)
+        };
+        savedScore.push(playerScore);
+        localStorage.setItem("savedScore", JSON.stringify(savedScore));
+        window.open("highscore.html", "_self")
+    }
 }
 
 // countdown time
 var countDown = function () {
-    var countDownTimer = document.querySelector("#countdown");
     countDownTimer.style.display = "block";
     var timeLeft = setInterval(function () {
         if (time <= 0) {
             clearInterval(timeLeft);
+            time = 0;
             countDownTimer.innerText = "Time's Up!"
             var quiz = document.querySelector("#quiz");
             quiz.style.display = "none";
-            alert("Sorry, time's up!  Your score is " + time);
-            window.open("highscore.html", "_self");
+            var end = document.createElement("div");
+            end.id = "end";
+            main.appendChild(end);
+            end.innerHTML = "<h2>Sorry!</h2><p>Time's up</p><p>Your score: <span>" + time + "</span></p>";
+            saveScore(time, end);
+        } else if (questionIndexCount === quizContent.length) {
+            clearInterval(timeLeft);
         } else {
             countDownTimer.innerText = "Time Left: " + time;
         };
