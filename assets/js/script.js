@@ -104,7 +104,7 @@ var quizCreate = function () {
 // give feedback after choosing answers
 var answerQuiz = function (event) {
     var selectAnswer = event.target;
-
+    // check if the selected answer matches the right answer
     if (selectAnswer.matches(".option")) {
         var indexAnswer = quizContent[questionIndexCount].answer;
         var answerContent = quizContent[questionIndexCount].options[indexAnswer];
@@ -140,6 +140,7 @@ var makeQuestion = function () {
             btn.innerText = quizContent[questionIndexCount].options[i];
         };
     } else {
+        // to avoid finish last question while time's up
         if (time > 0) {
             var quiz = document.querySelector("#quiz");
             quiz.style.display = "none";
@@ -192,6 +193,7 @@ var countDown = function () {
             end.innerHTML = "<h2>Sorry!</h2><p>Time's up</p><p>Your score: <span>" + time + "</span></p>";
             saveScore(time, end);
         } else if (questionIndexCount === quizContent.length) {
+            // when complete the quiz, to avoid time continue counting down while saving score
             clearInterval(timeLeft);
         } else {
             countDownTimer.innerText = "Time Left: " + time;
