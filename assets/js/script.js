@@ -1,7 +1,7 @@
-var startBtn = document.querySelector("#start-btn");
-var intro = document.querySelector("#intro");
-var main = document.querySelector("main");
-var countDownTimer = document.querySelector("#countdown");
+var startBtnEl = document.querySelector("#start-btn");
+var introEl = document.querySelector("#intro");
+var mainEl = document.querySelector("main");
+var countDownTimerEl = document.querySelector("#countdown");
 var questionIndexCount = 0;
 var savedScore = localStorage.getItem("savedScore");
 var time = 200;
@@ -73,7 +73,7 @@ var quizContent = [
 var quizCreate = function () {
     var quiz = document.createElement("div");
     quiz.id = "quiz";
-    main.appendChild(quiz);
+    mainEl.appendChild(quiz);
 
     var questionContainer = document.createElement("div");
     questionContainer.className = "question-container";
@@ -144,10 +144,10 @@ var makeQuestion = function () {
         if (time > 0) {
             var quiz = document.querySelector("#quiz");
             quiz.style.display = "none";
-            countDownTimer.style.display = "none";
+            countDownTimerEl.style.display = "none";
             var end = document.createElement("div");
             end.id = "end";
-            main.appendChild(end);
+            mainEl.appendChild(end);
             end.innerHTML = "<h2>Congratulations!</h2><p>You have answered all the questions and let's check out how you do.</p><p>Your score: <span>" + time + "</span></p>";
             saveScore(time, end);
         }
@@ -179,35 +179,35 @@ var saveScore = function (score, container) {
 
 // countdown time
 var countDown = function () {
-    countDownTimer.style.display = "block";
+    countDownTimerEl.style.display = "block";
     var timeLeft = setInterval(function () {
         if (time <= 0) {
             clearInterval(timeLeft);
             time = 0;
-            countDownTimer.innerText = "Time's Up!"
+            countDownTimerEl.innerText = "Time's Up!"
             var quiz = document.querySelector("#quiz");
             quiz.style.display = "none";
             var end = document.createElement("div");
             end.id = "end";
-            main.appendChild(end);
+            mainEl.appendChild(end);
             end.innerHTML = "<h2>Sorry!</h2><p>Time's up</p><p>Your score: <span>" + time + "</span></p>";
             saveScore(time, end);
         } else if (questionIndexCount === quizContent.length) {
             // when complete the quiz, to avoid time continue counting down while saving score
             clearInterval(timeLeft);
         } else {
-            countDownTimer.innerText = "Time Left: " + time;
+            countDownTimerEl.innerText = "Time Left: " + time;
         };
         time--;
     }, 1000)
 }
 
 // after click start button, run all these functions
-startBtn.onclick = function () {
-    intro.style.display = "none";
+startBtnEl.onclick = function () {
+    introEl.style.display = "none";
     quizCreate();
     time = 200;
     countDown();
 };
 
-main.addEventListener("click", answerQuiz);
+mainEl.addEventListener("click", answerQuiz);
